@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.build.json",
+  "include": ["./src/**/*.ts"],
+  "exclude": ["jest.config.ts", "setup-tests.ts", "node_modules"],
+  "typeAcquisition": {
+    "include": [
+      "jest"
+    ]
+  }
+}
