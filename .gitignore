@@ -1,4 +1,4 @@
 node_modules
-src/coverage/
+coverage/
 .tsbuildinfo
 lib/
