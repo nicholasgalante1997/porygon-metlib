@@ -5,9 +5,14 @@ export type BaseMetric = {
 };
 
 export type TimingValue = {
-  duration: number;
+  duration: string;
 } & BaseMetric;
 
 export type AvailabilityValue = {
   availability: 0 | 1;
+} & BaseMetric;
+
+export type CountValue = {
+  count_adjustment: 1;
+  s?: string // supplementary metadata
 } & BaseMetric;

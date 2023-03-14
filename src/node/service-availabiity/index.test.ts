@@ -8,7 +8,7 @@ describe('node | monitor suite', () => {
   });
 
   let mockServiceName = 'jest_npm_pkg_suite';
-  let mockFnName= 'mockFnInv()';
+  let mockFnName = 'mockFnInv()';
 
   beforeEach(() => {
     mockAxiosInstance = null;
@@ -16,6 +16,10 @@ describe('node | monitor suite', () => {
       baseURL: 'http://localhost:7100',
     });
   });
+
+  console.log(mockAxiosInstance.getUri({
+    baseURL: 'http://localhost:7100',
+  }))
 
   test('monitor, sync, returns number value', () => {
     const mockFnReturnsNumber = jest.fn(() => 22);
@@ -33,13 +37,15 @@ describe('node | monitor suite', () => {
     const mockFnThrowsError = jest.fn(() => {
       throw new Error();
     });
-    expect(() => monitor(
-      mockAxiosInstance!,
-      mockServiceName,
-      mockFnName,
-      mockFnThrowsError
-    )).toThrow();
-  })
+    expect(() =>
+      monitor(
+        mockAxiosInstance!,
+        mockServiceName,
+        mockFnName,
+        mockFnThrowsError
+      )
+    ).toThrow();
+  });
 
   test('monitorAsync, async, returns number value', async () => {
     const mockFnReturnsNumber = jest.fn(async () => {
@@ -65,9 +71,9 @@ describe('node | monitor suite', () => {
         mockServiceName,
         mockFnName,
         mockAsyncFnThrowsError
-      )
+      );
     } catch (e: any) {
       expect(e.message).toEqual('mock_err_thrown');
     }
-  })
+  });
 });

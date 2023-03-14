@@ -1,6 +1,6 @@
 {
   "name": "@nickgdev/porygon-metlib",
-  "version": "1.0.81",
+  "version": "1.0.9",
   "description": "metrics library for node and browser based metric tracking.",
   "readme": "./README.md",
   "types": "lib/index.d.ts",

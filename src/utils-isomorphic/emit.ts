@@ -1,12 +1,12 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { TimingValue, AvailabilityValue } from '../types';
+import { TimingValue, AvailabilityValue, CountValue } from '../types';
 
 export type EmitOptions = {
   url: string;
   axiosInstance: AxiosInstance;
   data?: {
-    m_type: 'timing' | 'availabilty';
-    value: TimingValue | AvailabilityValue;
+    m_type: 'timing' | 'availabilty' | 'count';
+    value: TimingValue | AvailabilityValue | CountValue;
   };
   extendAxiosConfig?: AxiosRequestConfig;
 };

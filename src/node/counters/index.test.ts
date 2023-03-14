@@ -1,8 +1,8 @@
 import { AxiosInstance } from 'axios';
 import { configureAxiosInstance } from '../../utils-isomorphic';
-import { time, timeAsync } from './index';
+import { count, countAsync } from './index';
 
-describe('node | time suite', () => {
+describe('node | count suite', () => {
   let mockAxiosInstance: AxiosInstance | null = configureAxiosInstance({
     baseURL: 'http://localhost:7100',
   });
@@ -17,9 +17,9 @@ describe('node | time suite', () => {
     });
   });
 
-  test('time, sync, returns number after invoking passed fn', () => {
+  test('count, returns number value after invoking passed fn', () => {
     const mockFnReturnsNumber = jest.fn(() => 22);
-    const val = time(
+    const val = count(
       mockAxiosInstance!,
       mockServiceName,
       mockFnName,
@@ -29,20 +29,20 @@ describe('node | time suite', () => {
     expect(mockFnReturnsNumber).toBeCalledTimes(1);
   });
 
-  test('time, sync, throws error if error is thrown during execution', () => {
+  test('count, rethrows error if error is thrown during execution', () => {
     const mockFnThrowsError = jest.fn(() => {
       throw new Error();
     });
     expect(() =>
-      time(mockAxiosInstance!, mockServiceName, mockFnName, mockFnThrowsError)
+      count(mockAxiosInstance!, mockServiceName, mockFnName, mockFnThrowsError)
     ).toThrow();
   });
 
-  test('timeAsync, async, returns number value', async () => {
+  test('countAsync, returns promisified number value', async () => {
     const mockFnReturnsNumber = jest.fn(async () => {
       return 22;
     });
-    const val = await timeAsync(
+    const val = await countAsync(
       mockAxiosInstance!,
       mockServiceName,
       mockFnName,
@@ -52,12 +52,12 @@ describe('node | time suite', () => {
     expect(mockFnReturnsNumber).toBeCalledTimes(1);
   });
 
-  test('timeAsync, async, throws error if error is thrown during execution', async () => {
+  test('countAsync, rethrows error if error is thrown during execution', async () => {
     const mockAsyncFnThrowsError = jest.fn(async () => {
       throw new Error('mock_err_thrown');
     });
     try {
-      await timeAsync(
+      await countAsync(
         mockAxiosInstance!,
         mockServiceName,
         mockFnName,

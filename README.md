@@ -13,6 +13,8 @@ npm install @nickgdev/porygon-metlib
 ```ts
 import { MetricSync, MetricAsync } from '@nickgdev/porygon-metlib';
 
+/** monitor */
+
 function syncFnThatCouldThrowErr(n: number): number {
     /** ... */
 }
