@@ -11,15 +11,15 @@ export interface IMetric {
 }
 
 export interface IMetricSync<T> extends IMetric {
-  count(fn: (...args: any[]) => T | void, s?: Record<string, string>): T | void;
-  time(fn: (...args: any[]) => T | void): T | void;
-  monitor(fn: (...args: any[]) => T | void): T | void;
+  count(fn: (...args: any[]) => T, s?: Record<string, string>): T;
+  time(fn: (...args: any[]) => T): T;
+  monitor(fn: (...args: any[]) => T): T;
 }
 
 export interface IMetricAsync<T> extends IMetric {
-  countAsync(fn: (...args: any[]) => Promise<T | void>, s?: Record<string, string>): Promise<T | void>;
-  timeAsync(fn: (...args: any[]) => Promise<T | void>): Promise<T | void>;
-  monitorAsync(fn: (...args: any[]) => Promise<T | void>): Promise<T | void>;
+  count(fn: (...args: any[]) => Promise<T>, s?: Record<string, string>): Promise<T>;
+  time(fn: (...args: any[]) => Promise<T>): Promise<T>;
+  monitor(fn: (...args: any[]) => Promise<T>): Promise<T>;
 }
 
 export type MetricConfig = {
@@ -65,71 +65,65 @@ export class MetricSync<T> extends BaseMetricImpl implements IMetricSync<T> {
     super(metricConfig);
   }
 
-  count(fn: (...args: any[]) => T, s?: Record<string, string>): T | void {
-    const result = count<T>(
+  count(fn: (...args: any[]) => T, s?: Record<string, string>): T {
+    return count<T>(
       this.axiosInstance,
       this.serviceName,
       this.functionName,
       fn,
       s
-    )
-    return result;
+    ) as T;
   }
 
-  time(fn: (...args: any[]) => T): T | void {
-    const result = time<T>(
+  time(fn: (...args: any[]) => T): T {
+    return time<T>(
       this.axiosInstance,
       this.serviceName,
       this.functionName,
       fn
-    );
-    return result;
+    ) as T;
   }
 
-  monitor(fn: (...args: any[]) => T): T | void {
-    const result = monitor(
+  monitor(fn: (...args: any[]) => T): T {
+    return monitor<T>(
       this.axiosInstance,
       this.serviceName,
       this.functionName,
       fn
-    );
-    return result;
+    ) as T;
   }
 }
 
-export class MetricASync<T> extends BaseMetricImpl implements IMetricAsync<T> {
+export class MetricAsync<T> extends BaseMetricImpl implements IMetricAsync<T> {
   constructor(metricConfig: MetricConfig) {
     super(metricConfig);
   }
 
-  async countAsync(fn: (...args: any[]) => Promise<T>, s?: Record<string, string> | undefined): Promise<void | T> {
-    const result = await countAsync<T>(
+  async count(fn: (...args: any[]) => Promise<T>, s?: Record<string, string> | undefined): Promise<T> {
+    return await countAsync<T>(
       this.axiosInstance,
       this.serviceName,
       this.functionName,
       fn,
       s
-    );
-    return result;
+    ) as T;
   }
 
-  async timeAsync(fn: (...args: any[]) => Promise<T>): Promise<T | void> {
-    const result = await timeAsync<T>(
+  async time(fn: (...args: any[]) => Promise<T>): Promise<T> {
+    return await timeAsync<T>(
       this.axiosInstance,
       this.serviceName,
       this.functionName,
       fn
-    );
-    return result;
+    ) as T;
   }
 
-  async monitorAsync(fn: (...args: any[]) => Promise<T>): Promise<T | void> {
-    const result = await monitorAsync(
+  async monitor(fn: (...args: any[]) => Promise<T>): Promise<T> {
+    return await monitorAsync<T>(
       this.axiosInstance,
       this.serviceName,
       this.functionName,
       fn
-    );
-    return result;
+    ) as T;
   }
 }
